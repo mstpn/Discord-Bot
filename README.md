@@ -1,1 +1,1 @@
-# Discord Bot Bruh
+# Discord Bot
