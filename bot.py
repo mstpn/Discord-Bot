@@ -8,6 +8,10 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
+
+# ==================================================
+#           Set Up Discord Bot as Client
+# ==================================================
 client = discord.Client()
 
 # Bot Connection
@@ -15,7 +19,10 @@ client = discord.Client()
 async def on_ready():
     print(f'{client.user} has connected to Discord!')
 
-# Respond to messages
+    
+# ==================================================
+#               Respond to messages
+# ==================================================
 @client.event
 async def on_message(message):
 
@@ -23,7 +30,10 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # Thumbs up response
+    
+    # ==================================================
+    #               Thumbs up response
+    # ==================================================
     if message.content.startswith('!thumb'):
         channel = message.channel
         await channel.send('Send me that 👍 reaction, mate')
@@ -38,24 +48,30 @@ async def on_message(message):
         else:
             await channel.send('👍')
 
-
-    # Hello response
+            
+    # ==================================================
+    #                 Hello response
+    # ==================================================
     if message.content.startswith('!hello'):
         await message.channel.send('Hello!')
 
-# # Knock Knock
-# @client.event
-# async def on_message(message):
-#     if message.author == client.user:
-#         return
+        
+    # ==================================================
+    #                 Joke response
+    # ==================================================
+    # # Knock Knock
+    # @client.event
+    # async def on_message(message):
+    #     if message.author == client.user:
+    #         return
 
-#     if message.content.startswith('$joke'):
-#         await message.channel.send('Knock knock!')   
+    #     if message.content.startswith('$joke'):
+    #         await message.channel.send('Knock knock!')   
 
-#     def who(message, user):
-#         return user == message.author and message.content.startswith('who')      
+    #     def who(message, user):
+    #         return user == message.author and message.content.startswith('who')      
 
-#     # try:
-#     #     message, user = await client.wait_for('')   
+    #     # try:
+    #     #     message, user = await client.wait_for('')   
 
 client.run(TOKEN)
