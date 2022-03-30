@@ -40,6 +40,7 @@ async def on_message(message):
 
         def check(reaction, user):
             return user == message.author and str(reaction.emoji) == '👍'
+            # return str(reaction.emoji) == '👍'
 
         try:
             reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
@@ -59,19 +60,29 @@ async def on_message(message):
     # ==================================================
     #                 Joke response
     # ==================================================
-    # # Knock Knock
-    # @client.event
-    # async def on_message(message):
-    #     if message.author == client.user:
-    #         return
 
-    #     if message.content.startswith('$joke'):
-    #         await message.channel.send('Knock knock!')   
+    if message.content.lower().startswith('!joke'):
+        await message.channel.send('Knock knock!')
 
-    #     def who(message, user):
-    #         return user == message.author and message.content.startswith('who')      
+        def check1(msg):
+            matches = ["whose", "who", "who\'s"]
+            return message.author == msg.author and any(word in msg.content.lower() for word in matches)      
 
-    #     # try:
-    #     #     message, user = await client.wait_for('')   
+        def check2(msg):
+            matches = ["who", "who?"]
+            return message.author == msg.author and any(word in msg.content.lower() for word in matches)  
+
+        response1 = await client.wait_for('message', check=check1)
+        await message.channel.send('Etch')
+
+        response2 = await client.wait_for('message', check=check2)
+        await message.channel.send('Bless you')
+
+        # Getting the content the messages that the user sent in
+        response1_content = response1.content
+        response2_content = response2.content
+        # print(response1_content)
+        # print(response2_content) 
+        await message.channel.send('\nYour joke replies were:\n' + response1_content + '\n' + response2_content)
 
 client.run(TOKEN)
