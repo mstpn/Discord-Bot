@@ -1,9 +1,9 @@
 # bot.py
 import os
 import asyncio
-
 import discord
 from dotenv import load_dotenv
+import secondfile
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -19,6 +19,28 @@ client = discord.Client()
 async def on_ready():
     print(f'{client.user} has connected to Discord!')
 
+
+    # testing channels (guilds)
+    text_channel_list = {}
+    for server in client.guilds:
+        for channel in server.channels:
+            if str(channel.type) == 'text':
+                text_channel_list[channel.name] = channel.id
+
+    print(text_channel_list)
+    test_channel = client.get_channel(text_channel_list.get('test'))
+
+    # Write to channel
+    # try:
+    #     await test_channel.send('This is not a drill')
+    # except:
+    #     print("write error")
+    # else:
+    #     print("message sent")
+
+    # From other file function (non-async)
+    msg = "This is definitely not a drill"
+    secondfile.sendMsg(client, test_channel, msg)
     
 # ==================================================
 #               Respond to messages
