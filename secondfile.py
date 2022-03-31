@@ -1,5 +1,7 @@
 # import bot
 
+#something
+
 def sendMsg(client, channel, msg):
     try:
         # https://stackoverflow.com/questions/64199358/discord-py-send-message-from-non-async-function
