@@ -5,7 +5,7 @@
 import discord
 import asyncio
 
-class User():
+class User(object): # param(object) means object is made ancestor of all classes
 
     #===================================================
     #=                    Variables                    =
