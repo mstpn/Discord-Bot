@@ -2,7 +2,6 @@
 
 <<<<<<< HEAD
 #something
-=======
 # SOME STUFF I WROTE
 >>>>>>> 5eaa069 (testing)
 
