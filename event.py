@@ -6,11 +6,21 @@ import discord
 import asyncio
 
 class Event():
+
+    #===================================================
+    #=                    Variables                    =
+    #===================================================
+    
     __creator = None
     __duration = None
     __startTime = None
     __voice = None
     __text = None
+
+
+    #==========================================================
+    #=                    Public Functions                    =
+    #==========================================================
 
     def __init__(self):
         pass

@@ -2,7 +2,9 @@
 #=               Class User             =
 #========================================
 
+from os import environ
 from discord import User
+import event
 
 class ServerUser(object): # param(object) means object is made ancestor of all classes
 
@@ -15,7 +17,7 @@ class ServerUser(object): # param(object) means object is made ancestor of all c
     __faculty = None
     __programYear = None
     __username = None
-    #__myEvents = Events()  # Requires Events Class
+    __myEvents = event.Event()
 
 
     #==========================================================
