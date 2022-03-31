@@ -1,29 +1,54 @@
-#Class User
+#========================================
+#=               Class User             =
+#========================================
+
+import discord
+import asyncio
 
 class User():
 
-    #==========================================================================
-    def __init__(self):
+    #===================================================
+    #=                    Variables                    =
+    #===================================================
+
+    __discordID = None
+    __firstName = None
+    __faculty = None
+    __programYear = None
+    __username = None
+    #__myEvents = Events()  # Requires Events Class
+
+
+    #==========================================================
+    #=                    Public Functions                    =
+    #==========================================================
+
+    def __init__(self): # Default Constructor for User
         pass
 
-    def discordID():
+    def discordID(): # Acquire User Discord ID
         pass
 
-    def firstName():
+    def firstName(): # Acquire User
         pass
 
-    def faculty():
+    def faculty(): # Acquire User
         pass
 
-    def programYear():
+    def programYear(): # Acquire User
         pass
 
-    def userName():
+    def userName(): # Acquire User
         pass
 
-    def myEvents():
+    def myEvents(): # Acquire User
         pass
-    #==========================================================================
 
+    def createEvent(): # Create User Event
+        pass
+
+    def deleteEvent(): # Delete User Event
+        pass
+    
 
 
