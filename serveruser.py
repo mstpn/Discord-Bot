@@ -1,6 +1,6 @@
-#========================================
-#=               Class User             =
-#========================================
+#=============================================
+#=              ServerUser Class             =
+#=============================================
 
 from discord import User
 import event
@@ -27,8 +27,8 @@ class ServerUser(object): # param(object) means object is made ancestor of all c
         pass
 
     def discordID(): # Acquire ServerUser Discord ID
-        
-
+        pass
+    
     def firstName(): # Acquire ServerUser
         pass
 
