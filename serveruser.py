@@ -2,7 +2,6 @@
 #=               Class User             =
 #========================================
 
-from os import environ
 from discord import User
 import event
 
