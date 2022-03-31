@@ -1,9 +1,7 @@
 # import bot
 
-<<<<<<< HEAD
 #something
 # SOME STUFF I WROTE
->>>>>>> 5eaa069 (testing)
 
 def sendMsg(client, channel, msg):
     try:
