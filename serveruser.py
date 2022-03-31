@@ -2,10 +2,9 @@
 #=               Class User             =
 #========================================
 
-import discord
-import asyncio
+from discord import User
 
-class User(object): # param(object) means object is made ancestor of all classes
+class ServerUser(object): # param(object) means object is made ancestor of all classes
 
     #===================================================
     #=                    Variables                    =
@@ -23,31 +22,31 @@ class User(object): # param(object) means object is made ancestor of all classes
     #=                    Public Functions                    =
     #==========================================================
 
-    def __init__(self): # Default Constructor for User
+    def __init__(self): # Default Constructor for ServerUser
         pass
 
-    def discordID(): # Acquire User Discord ID
+    def discordID(): # Acquire ServerUser Discord ID
+        
+
+    def firstName(): # Acquire ServerUser
         pass
 
-    def firstName(): # Acquire User
+    def faculty(): # Acquire ServerUser
         pass
 
-    def faculty(): # Acquire User
+    def programYear(): # Acquire ServerUser
         pass
 
-    def programYear(): # Acquire User
+    def userName(): # Acquire ServerUser
         pass
 
-    def userName(): # Acquire User
+    def myEvents(): # Acquire ServerUser
         pass
 
-    def myEvents(): # Acquire User
+    def createEvent(): # Create ServerUser Event
         pass
 
-    def createEvent(): # Create User Event
-        pass
-
-    def deleteEvent(): # Delete User Event
+    def deleteEvent(): # Delete ServerUser Event
         pass
     
 

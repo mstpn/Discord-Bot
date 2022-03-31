@@ -2,16 +2,14 @@
 #=              Class Admin              =
 #=========================================
 
-import user
-import discord
-import asyncio
+import serveruser
 
-class Admin(user.User):
+class Admin(serveruser.User):
     
     #==========================================================
     #=                    Public Functions                    =
     #==========================================================
-    
+
     def deleteAllEvents():
         pass
 
