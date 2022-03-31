@@ -1,12 +1,15 @@
 # bot.py
 import os
 import asyncio
+import random
 import discord
 from dotenv import load_dotenv
-import secondfile
+
+from discord.ext import commands
+from discord.utils import get
+
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
 
 
 # ==================================================
@@ -14,10 +17,13 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 # ==================================================
 client = discord.Client()
 
+
 # Bot Connection
 @client.event 
 async def on_ready():
-    print(f'{client.user} has connected to Discord!')
+    await client.change_presence(status=discord.Status.idle)
+    print(f'{client.user.name} has connected to Discord!')
+
 
 
     # testing channels (guilds)
@@ -39,8 +45,8 @@ async def on_ready():
     #     print("message sent")
 
     # From other file function (non-async)
-    msg = "This is definitely not a drill"
-    secondfile.sendMsg(client, test_channel, msg)
+    # msg = "This is definitely not a drill"
+    # secondfile.sendMsg(client, test_channel, msg)
     
 # ==================================================
 #               Respond to messages
@@ -51,21 +57,19 @@ async def on_message(message):
     # Ensure it doesn't respond to itself
     if message.author == client.user:
         return
-
     
     # ==================================================
     #               Thumbs up response
     # ==================================================
-    if message.content.startswith('!thumb'):
+    if message.content.lower().startswith('!thumb'):
         channel = message.channel
         await channel.send('Send me that 👍 reaction, mate')
 
-        def check(reaction, user):
-            return user == message.author and str(reaction.emoji) == '👍'
-            # return str(reaction.emoji) == '👍'
+        def check(reaction):
+            return str(reaction.emoji == '👍')
 
         try:
-            reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
+            await client.wait_for('reaction_add', timeout=6.0, check=check)
         except asyncio.TimeoutError:
             await channel.send('👎')
         else:
@@ -75,8 +79,8 @@ async def on_message(message):
     # ==================================================
     #                 Hello response
     # ==================================================
-    if message.content.startswith('!hello'):
-        await message.channel.send('Hello!')
+    if message.content.lower().startswith('!hello'):
+        await message.channel.send(f'Hello! {message.author.name}')
 
         
     # ==================================================
@@ -107,4 +111,4 @@ async def on_message(message):
         # print(response2_content) 
         await message.channel.send('\nYour joke replies were:\n' + response1_content + '\n' + response2_content)
 
-client.run(TOKEN)
+client.run(os.getenv('DISCORD_TOKEN'))
