@@ -2,6 +2,7 @@
 #=              ServerUser Class             =
 #=============================================
 
+import discord
 from discord import User
 import event
 
