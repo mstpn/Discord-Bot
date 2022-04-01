@@ -1,13 +1,10 @@
 # bot.py
 import os
+import discord
+from discord.ext import commands
 import asyncio
 import random
-import discord
 from dotenv import load_dotenv
-
-from discord.ext import commands
-from discord.utils import get
-
 
 load_dotenv()
 
