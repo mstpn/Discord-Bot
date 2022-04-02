@@ -65,3 +65,23 @@
         # print(response1_content)
         # print(response2_content) 
         await message.channel.send('\nYour joke replies were:\n' + response1_content + '\n' + response2_content)
+        
+        
+        
+        
+        (from secondfile.py)
+        # import bot
+
+        #something
+        # SOME STUFF I WROTE
+
+        def sendMsg(client, channel, msg):
+            try:
+                # https://stackoverflow.com/questions/64199358/discord-py-send-message-from-non-async-function
+                client.loop.create_task(channel.send(msg))
+            except:
+                print("write error")
+                return False
+            else:
+                print("message sent")
+                return True
