@@ -21,5 +21,5 @@ games = [
     "Unturned",
     "Assassin's Creed Valhalla",
     "No Man's Sky",
-    "Prey",
+    "Prey"
 ]
