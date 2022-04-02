@@ -1,26 +1,27 @@
 # runmain.py
 import os
 import discord
-from discord.ext import commands
-import asyncio
-import random
+from random import randrange
 from dotenv import load_dotenv
-
 load_dotenv()
+
+from games import games
 
 
 # ==================================================
 #           Set Up Discord Bot as Client
 # ==================================================
-client = discord.Client()
+
+# Mildred Bot will load up into the server as Idle
+client = discord.Client(status=discord.Status.online)
 
 
 # Bot Connection
 @client.event 
 async def on_ready():
-    await client.change_presence(status=discord.Status.online)
+    num = randrange(len(games))
     print(f'{client.user.name} has dropped into your Discord server!')
-
+    await client.change_presence(activity=discord.Game(games[num]), afk=True)
 
 # ==================================================
 #               Respond to messages
@@ -31,12 +32,12 @@ async def on_message(message):
     # Ensure it doesn't respond to itself
     if message.author == client.user:
         return
-                
+
     # ==================================================
     #                 Status response
     # ==================================================
     elif message.content.lower().startswith('!idle'):
-        await message.channel.send(f"Ok {message.author.name}, I'm walking away!")
+        await message.channel.send(f"Ok {message.author.name}, I'm AFK!")
         await client.change_presence(status=discord.Status.idle)
 
     elif message.content.lower().startswith('!dnd'):
