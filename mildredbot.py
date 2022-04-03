@@ -1,3 +1,9 @@
+# mildredbot.py
+
+# ==== Externally Built Main Imports ====
+import discord
+
+
 #========================================
 #=               Bot Class             =
 #========================================
@@ -8,7 +14,7 @@ class Bot():
     #===================================================
     #=                    Variables                    =
     #===================================================
-
+    __botClient = None
     __userList = None
     __eventList = None
     __newsFeed = None
@@ -19,16 +25,16 @@ class Bot():
     #==========================================================
 
     def __init__(self):
+        self.__botClient = discord.Client(status=discord.Status.online)
+
+    def updateNewsFeed(self, object):
         pass
 
-    def updateNewsFeed(object):
+    def parseCommand(self):
         pass
 
-    def parseCommand():
+    def createUsername(self, object):
         pass
 
-    def createUsername(object):
-        pass
-
-    def displayCommands():
+    def displayCommands(self):
         pass
