@@ -93,7 +93,7 @@ class Messages():
         elif self.userMessage.content.lower().startswith(commandsList[5]):
             game = discord.Game(games[randrange(len(games))])
             await botClient.change_presence(activity=game)
-            await self.userMessage.channel.send(f"Alright {self.userMessage.author.name}, I'll play {game}")
+            await userMessage.channel.send(f"Alright {userMessage.author.name}, I'll play {game}")
             # return
         # ==== End Game Response ====
                     
