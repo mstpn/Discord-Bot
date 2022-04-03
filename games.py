@@ -1,3 +1,9 @@
+# games.py
+# import into another file by using "from games import games"
+
+
+# List of Games the Bot Plays on it's Status Profile
+# This was for testing purposes
 games = [
     "Sea of Thieves",
     "Carl on Duty: Mall Cops",
