@@ -1,15 +1,18 @@
 # runmain.py
+
+# ==== Externally Built Main Imports ====
 import os
 import discord
 
-
+# ==== Externally Built Object Imports ====
 from random import randrange
 from dotenv import load_dotenv
+# Grabs the Bot token locally from machine
 load_dotenv()
 
-
+# ==== Locally Built Object Imports ====
 from games import games
-from messages import messagesHandler
+from messages import Messages
 
 
 # ==================================================
@@ -17,20 +20,22 @@ from messages import messagesHandler
 # ==================================================
 
 # Mildred Bot will load up into the server as Idle
-client = discord.Client(status=discord.Status.online)
+botClient = discord.Client(status=discord.Status.online)
 
 
 # Bot Connection
-@client.event 
+@botClient.event 
 async def on_ready():
-    print(f'{client.user.name} has dropped into your Discord server!')
-    await client.change_presence(activity=discord.Game(games[randrange(len(games))]),afk=True)
+    print(f'{botClient.user.name} has dropped into your Discord server!')
+    await botClient.change_presence(activity=discord.Game(games[randrange(len(games))]),afk=True)
 
 # ==================================================
 #               Respond to messages
 # ==================================================
-@client.event
-async def on_message(message):
-   await messagesHandler(message=message, client=client)
-    
-client.run(os.getenv('DISCORD_TOKEN'))
+@botClient.event
+async def on_message(userMessage):
+    readMessage = Messages(message=userMessage, client=botClient)
+    await readMessage.messagesHandler(userMessage, botClient)
+
+
+botClient.run(os.getenv('DISCORD_TOKEN'))
