@@ -62,6 +62,7 @@ class Messages():
         # ==== Hello Response ====
         elif userMessage.content.lower().startswith(commandsList[0]):
             await userMessage.channel.send(f"Hello {userMessage.author.name}!")
+            # return
         # ==== End Hello Response ====
 
 
@@ -69,18 +70,22 @@ class Messages():
         elif userMessage.content.lower().startswith(commandsList[1]):
             await userMessage.channel.send(f"Alright {userMessage.author.name}, I'm back!")
             await botClient.change_presence(status=discord.Status.online)
+            # return
 
         elif userMessage.content.lower().startswith(commandsList[2]):
             await userMessage.channel.send(f"Ok {userMessage.author.name}, I'm AFK!")
             await botClient.change_presence(status=discord.Status.idle)
+            # return
 
         elif userMessage.content.lower().startswith(commandsList[3]):
             await userMessage.channel.send(f"Shhhh {userMessage.author.name}, I need quiet!")
             await botClient.change_presence(status=discord.Status.dnd)
+            # return
 
         elif userMessage.content.lower().startswith(commandsList[4]):
             await userMessage.channel.send(f"Can't see me {userMessage.author.name}!")
             await botClient.change_presence(status=discord.Status.invisible)
+            # return
         # ==== End Status Response(s) ====
 
 
@@ -89,6 +94,7 @@ class Messages():
             game = discord.Game(games[randrange(len(games))])
             await botClient.change_presence(activity=game)
             await userMessage.channel.send(f"Alright {userMessage.author.name}, I'll play {game}"
+            # return
         # ==== End Game Response ====
                     
                                            
