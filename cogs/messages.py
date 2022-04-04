@@ -10,7 +10,6 @@ from random import randrange
 
 # ==== Locally Built Object Imports ====
 from games import games
-from commandsList import commandsList
 
 # Messages Class
 # Purpose: To determine what message the user has sent and call the appropriate

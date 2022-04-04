@@ -29,14 +29,14 @@ class NewsFeed():
 
     # Constructor
     def __init__(self):
-        self.getSources()
+        self.__getSources()
         # testing
         for source in self.__sourcesList:
             source.printself()
         print("Last updated: ", self.__lastUpdated)
 
     # Builds the initial source list upon initialization
-    def getSources(self):
+    def __getSources(self):
         sourcesDF = pd.read_csv('sources.csv')
         for index, row in sourcesDF.iterrows():
             source = Source(
@@ -62,5 +62,5 @@ class NewsFeed():
 """ --------------------LOCAL TESTING------------------------- """
 
 feed = NewsFeed()
-feed.getSources()
+feed.__getSources()
 

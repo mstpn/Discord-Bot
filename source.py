@@ -2,8 +2,10 @@
 # import into another file by using "from source import Source"
 
 from dotenv import load_dotenv
-import tweepy
+# import tweepy
 import os
+import feedparser
+
 
 #==========================================
 #=              Source Class              =
@@ -30,16 +32,19 @@ class Source():
         self.__sourceName = name
         self.__sourceType = type
         self.__sourceURL = url
-        self.__storyList = []
+        self.__getStories()
         
         pass
 
-    def getStories(self):
-
+    def __getStories(self):
+        # gets all the stories @init
         pass
 
     def updateStories(self):
         pass
+
+    def getURL(self):
+        return self.__sourceURL
 
     # testing
     def printself(self):
@@ -50,8 +55,20 @@ class Source():
 
 # local testing
 
+test = Source('MRU Twitter RSS', 'rss', "https://rss.app/feeds/xkh29vVdru9LoqlC.xml")
+NewsFeed = feedparser.parse(test.getURL())
+entry = NewsFeed.entries[0]
+
+print (entry.keys())
+
+title = entry.get('title')
+url = entry.get('link')
+
+print(title)
+print(url)
+
 # Authenticate to Twitter
-load_dotenv()
+# load_dotenv()
 
 # auth = tweepy.OAuthHandler(
 #     os.getenv('TWITTER_KEY'), 
@@ -61,16 +78,16 @@ load_dotenv()
 #     os.getenv('TWITTER_ACCESS'), 
 #     os.getenv('TWITTER_ACCESS_SECRET'))
 
-auth = tweepy.OAuth1UserHandler(
-    os.getenv('TWITTER_KEY'), 
-    os.getenv('TWITTER_KEY_SECRET'),
-    os.getenv('TWITTER_ACCESS'),
-    os.getenv('TWITTER_ACCESS_SECRET'))
+# auth = tweepy.OAuth1UserHandler(
+#     os.getenv('TWITTER_KEY'), 
+#     os.getenv('TWITTER_KEY_SECRET'),
+#     os.getenv('TWITTER_ACCESS'),
+#     os.getenv('TWITTER_ACCESS_SECRET'))
         
-api = tweepy.API(auth, wait_on_rate_limit=True)
+# api = tweepy.API(auth, wait_on_rate_limit=True)
 
-try:
-    api.verify_credentials()
-    print("Authentication OK")
-except:
-    print("Error during authentication")
+# try:
+#     api.verify_credentials()
+#     print("Authentication OK")
+# except:
+#     print("Error during authentication")
