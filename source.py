@@ -1,10 +1,10 @@
 # Filename: source.py
 # import into another file by using "from source import Source"
 
-from dotenv import load_dotenv
-# import tweepy
-import os
 import feedparser
+from datetime import datetime
+from dateutil.parser import *
+from story import Story
 
 
 #==========================================
@@ -28,66 +28,74 @@ class Source():
     #=                    Public Functions                    =
     #==========================================================
     
+    """
+    Constructor
+    """
     def __init__(self, name, type, url):
         self.__sourceName = name
         self.__sourceType = type
         self.__sourceURL = url
-        self.__getStories()
-        
-        pass
+        self.updateStories()
 
-    def __getStories(self):
-        # gets all the stories @init
-        pass
-
+    """ 
+    Generates a list of stories from the source
+        If no stories exist (lastUpdated == None), then only the 
+        top story is added to the list
+        If stories have been updated before, then all stories since
+        the last access date are added to the list
+    """
     def updateStories(self):
-        pass
+        feed = feedparser.parse(self.__sourceURL)
+        author = feed.feed.title
+        if self.__lastUpdated == None:
+            self.__storyList = []
+            story = Story(feed.entries[0].title,author,feed.entries[0].published,feed.entries[0].link)
+            self.__storyList.append(story)
+        else:
+            index = 0
+            if parse(feed.entries[index].published) > self.__lastUpdated:
+                self.__storyList = []
+                for entry in feed.entries:
+                    if parse(entry.published) > self.__lastUpdated:
+                        story = Story(entry.title,author,entry.published,entry.link)
+                        self.__storyList.append(story)  
+                    else:
+                        break
+        if len(self.__storyList) != 0:    
+            self.__lastUpdated = parse(self.__storyList[0].getDate())
+        print(self.__lastUpdated)
 
-    def getURL(self):
-        return self.__sourceURL
 
-    # testing
-    def printself(self):
-        print(self.__sourceName, self.__sourceType, self.__sourceURL, self.__lastUpdated)
-        for story in self.__storyList:
-            print(story)
+    # # testing DELETE LATER
+    # def printself(self):
+    #     print(self.__sourceName, self.__sourceType, self.__sourceURL, self.__lastUpdated)
+    #     for story in self.__storyList:
+    #         print(story)
+    
+    # def printStories(self):
+    #     for story in self.__storyList:
+    #         print(story.getTitle())
+    #         print(story.getAuthor())
+    #         print(story.getDate())
+    #         print(story.getURL())
 
 
 # local testing
 
-test = Source('MRU Twitter RSS', 'rss', "https://rss.app/feeds/xkh29vVdru9LoqlC.xml")
-NewsFeed = feedparser.parse(test.getURL())
-entry = NewsFeed.entries[0]
+# test = Source('MRU Twitter RSS', 'rss', "https://rss.app/feeds/xkh29vVdru9LoqlC.xml")
 
-print (entry.keys())
+# test = Source('Calgary', 'rss', "https://newsroom.calgary.ca/tagfeed/en/tags/City__News,Transportation,City__Release")
+# # NewsFeed = feedparser.parse(test.getURL())
+# # entry = NewsFeed.entries[0]
 
-title = entry.get('title')
-url = entry.get('link')
+# # print (entry.keys())
 
-print(title)
-print(url)
+# # title = entry.get('title')
+# # url = entry.get('link')
 
-# Authenticate to Twitter
-# load_dotenv()
+# # print(title)
+# # print(url)
 
-# auth = tweepy.OAuthHandler(
-#     os.getenv('TWITTER_KEY'), 
-#     os.getenv('TWITTER_KEY_SECRET'))
-
-# auth.set_access_token(
-#     os.getenv('TWITTER_ACCESS'), 
-#     os.getenv('TWITTER_ACCESS_SECRET'))
-
-# auth = tweepy.OAuth1UserHandler(
-#     os.getenv('TWITTER_KEY'), 
-#     os.getenv('TWITTER_KEY_SECRET'),
-#     os.getenv('TWITTER_ACCESS'),
-#     os.getenv('TWITTER_ACCESS_SECRET'))
-        
-# api = tweepy.API(auth, wait_on_rate_limit=True)
-
-# try:
-#     api.verify_credentials()
-#     print("Authentication OK")
-# except:
-#     print("Error during authentication")
+# test.updateStories()
+# test.printself()
+# test.printStories()

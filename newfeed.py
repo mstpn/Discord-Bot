@@ -46,7 +46,7 @@ class NewsFeed():
             )
             self.__sourcesList.append(source)
             # source.printself() #testing
-
+        
         self.__lastUpdated = datetime.now()        
 
     # Updates the already initialized source list 
