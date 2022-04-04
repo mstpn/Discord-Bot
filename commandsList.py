@@ -1,4 +1,7 @@
 
+# Filename: commandsList.py
+# import into another file by using "from commandsList import commmandsList"
+
 # List of Available Bot Commands
 # Could in the future have these on a local txt file
 commandsList = [

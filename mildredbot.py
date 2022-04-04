@@ -1,8 +1,12 @@
-# mildredbot.py
+# Filename: mildredbot.py
+# import into another file by using "from mildredbot import Bot"
 
 # ==== Externally Built Main Imports ====
 import discord
 
+# ==== Locally Built Object Imports ====
+from games import games
+from cogs.messages import Messages
 
 #========================================
 #=               Bot Class             =
@@ -26,11 +30,12 @@ class Bot():
 
     def __init__(self):
         self.__botClient = discord.Client(status=discord.Status.online)
+        __chatMessage = Messages()
 
     def updateNewsFeed(self, object):
         pass
 
-    def parseCommand(self):
+    def parseCommand(self, command):
         pass
 
     def createUsername(self, object):

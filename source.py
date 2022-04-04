@@ -1,3 +1,7 @@
+# Filename: source.py
+# import into another file by using "from source import Source"
+
+
 #==========================================
 #=              Source Class              =
 #==========================================

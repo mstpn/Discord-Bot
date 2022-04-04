@@ -1,3 +1,6 @@
+# Filename: event.py
+# import into another file by using "from event import Event"
+
 #=========================================
 #=              Event Class              =
 #=========================================

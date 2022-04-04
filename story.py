@@ -1,3 +1,7 @@
+# Filename: story.py
+# import into another file by using "from story import Story"
+
+
 #=========================================
 #=              Story Class              =
 #=========================================

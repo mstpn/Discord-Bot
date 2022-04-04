@@ -1,3 +1,6 @@
+# Filename: newfeed.py
+# import into another file by using "from newfeed import NewsFeed"
+
 #=============================================
 #=              News Feed Class              =
 #=============================================
