@@ -23,5 +23,20 @@ class Story():
     #=                    Public Functions                    =
     #==========================================================
 
-    def __init__(self):
-        pass
+    def __init__(self, title, author, date, url):
+        self.__title = title
+        self.__author = author
+        self.__date = date
+        self.__url = url
+        
+    def getTitle(self):
+        return self.__title
+
+    def getAuthor(self):
+        return self.__author
+
+    def getDate(self):
+        return self.__date
+
+    def getURL(self):
+        return self.__url
