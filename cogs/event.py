@@ -89,7 +89,7 @@ class Event(commands.Cog):
     async def delete_event(self, ctx, text_channel: TextChannel=None, voice_channel: VoiceChannel=None):
         if text_channel:
             await text_channel.delete()
-        else:
+        if voice_channel:
             await voice_channel.delete()
         return
 
