@@ -63,8 +63,9 @@ class Source():
                         break
         if len(self.__storyList) != 0:    
             self.__lastUpdated = parse(self.__storyList[0].getDate())
-        print(self.__lastUpdated)
 
+    def getStoryList(self):
+        return self.__storyList
 
     # # testing DELETE LATER
     # def printself(self):
@@ -72,12 +73,12 @@ class Source():
     #     for story in self.__storyList:
     #         print(story)
     
-    # def printStories(self):
-    #     for story in self.__storyList:
-    #         print(story.getTitle())
-    #         print(story.getAuthor())
-    #         print(story.getDate())
-    #         print(story.getURL())
+    def printStories(self):
+        for story in self.__storyList:
+            print(story.getTitle())
+            print(story.getAuthor())
+            print(story.getDate())
+            print(story.getURL())
 
 
 # local testing
