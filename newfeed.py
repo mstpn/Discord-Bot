@@ -9,17 +9,13 @@ from source import Source
 #=              News Feed Class              =
 #=============================================
 
-NAME_INDEX = 0
-TYPE_INDEX = 1
-LINK_INDEX = 2
-
 class NewsFeed():
 
     #===================================================
     #=                    Variables                    =
     #===================================================
 
-    __sourcesList = []
+    __sourcesList = None
     __lastUpdated = None
 
     
@@ -29,38 +25,44 @@ class NewsFeed():
 
     # Constructor
     def __init__(self):
-        self.__getSources()
-        # testing
-        for source in self.__sourcesList:
-            source.printself()
-        print("Last updated: ", self.__lastUpdated)
+        self.updateSources()
 
-    # Builds the initial source list upon initialization
-    def __getSources(self):
+
+    # Updates the source list 
+    def updateSources(self):
+        self.__sourcesList = []
         sourcesDF = pd.read_csv('sources.csv')
         for index, row in sourcesDF.iterrows():
-            source = Source(
+            csvSource = Source(
                 row["Name"],
                 row["Type"],
                 row["URL"]
             )
-            self.__sourcesList.append(source)
-            # source.printself() #testing
+            self.__sourcesList.append(csvSource)
+        
+        for source in self.__sourcesList:
+            source.updateStories()
 
-        self.__lastUpdated = datetime.now()        
+            # testing
+            # source.printStories()
 
-    # Updates the already initialized source list 
-    def updateSources(self):
+        self.__lastUpdated = datetime.now()     
 
-        self.__lastUpdated = datetime.now()
-
+    # Returns an array of strings that the bot can iterate through to post
     def postNews(self):
-        pass
+        self.updateSources()
+        stories = []
+        for source in self.__sourcesList:
+            for story in source.getStoryList():
+                storyString = '\n'.join(story.getAll())
+                stories.append(storyString)
+        return stories
+                
+
+        
         
 
 
 """ --------------------LOCAL TESTING------------------------- """
 
 feed = NewsFeed()
-feed.__getSources()
-

@@ -40,3 +40,6 @@ class Story():
 
     def getURL(self):
         return self.__url
+
+    def getAll(self):
+        return [self.__title, self.__author, self.__date, self.__url]
