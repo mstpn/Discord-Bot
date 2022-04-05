@@ -30,12 +30,10 @@ class Event(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        pass
 
     def createVoiceChannel(self, __startTime, __duration):
         __startTime = __startTime
         __duration = __duration
-        pass
 
     def createTextChannel(self, __startTime, __duration):
         __startTime = __startTime
@@ -67,25 +65,34 @@ class Event(commands.Cog):
         return
 
 
-    @commands.command(name="delete_event")
-    async def delete_event(self, ctx, channel: TextChannel=None):
-        # mbed = discord.Embed(
-        #     title = 'Success!',
-        #     description = "Channel: {} has been deleted".format(channel),
-        # # )
-        # await ctx.send(embed=mbed)
-        await channel.delete()
-        return
+    # @commands.command(name="delete_event")
+    # async def delete_event(self, ctx, channel: TextChannel=None):
+    #     # mbed = discord.Embed(
+    #     #     title = 'Success!',
+    #     #     description = "Channel: {} has been deleted".format(channel),
+    #     # # )
+    #     # await ctx.send(embed=mbed)
+    #     await channel.delete()
+    #     return
+
+    # @commands.command(name="delete_event")
+    # async def delete_event(self, ctx, channel: VoiceChannel=None):
+    #     # mbed = discord.Embed(
+    #     #     title = 'Success!',
+    #     #     description = "Channel: {} has been deleted".format(channel),
+    #     # )
+    #     # await ctx.send(embed=mbed)
+    #     await channel.delete()
+    #     return
 
     @commands.command(name="delete_event")
-    async def delete_event(self, ctx, channel: VoiceChannel=None):
-        # mbed = discord.Embed(
-        #     title = 'Success!',
-        #     description = "Channel: {} has been deleted".format(channel),
-        # )
-        # await ctx.send(embed=mbed)
-        await channel.delete()
+    async def delete_event(self, ctx, text_channel: TextChannel=None, voice_channel: VoiceChannel=None):
+        if text_channel:
+            await text_channel.delete()
+        else:
+            await voice_channel.delete()
         return
+
 
 def setup(bot):
     bot.add_cog(Event(bot))
