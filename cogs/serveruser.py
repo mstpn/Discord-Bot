@@ -5,13 +5,13 @@
 #=============================================
 #=              ServerUser Class             =
 #=============================================
+import discord
 from discord import ClientUser
-
-from event import Event
-
+from discord.ext import commands
 
 
-class User():
+
+class User(commands.Cog):
 
     #===================================================
     #=                    Variables                    =
@@ -28,15 +28,16 @@ class User():
     #=                    Public Functions                    =
     #==========================================================
 
-    def __init__(self): # Default Constructor for User
+    def __init__(self, bot): # Default Constructor for User
+        self.bot = bot
         pass
 
-    def __init__(self, discordID, firstName, faculty, programYear, username):
-        self.__discordID = discordID
-        self.__firstName = firstName
-        self.__faculty = faculty
-        self.__programYear = programYear
-        self.__username = username
+    # def __init__(self, discordID, firstName, faculty, programYear, username):
+    #     self.__discordID = discordID
+    #     self.__firstName = firstName
+    #     self.__faculty = faculty
+    #     self.__programYear = programYear
+    #     self.__username = username
 
     def getDiscordID(self): # Get User Discord ID
         return 
@@ -91,5 +92,16 @@ class User():
     def deleteEvent(self): # Delete ServerUser Event
         pass
     
+    # @commands.command(name="delete_event")
+    # async def delete_event(self, ctx: discord.Message, channel):
+    #     mbed:discord.Embed = discord.Embed(
+    #         title = 'Success!',
+    #         description = f'Channel: {channel} has been deleted'
+    #     )
+    #     delete_channel = 
+    #     await ctx.channel.send(embed=mbed)
+    #     await self.delete_event(ctx=ctx, channel=channel)
 
 
+def setup(bot):
+    bot.add_cog(User(bot))
