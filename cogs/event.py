@@ -22,11 +22,29 @@ class Event(commands.Cog):
     __startTime = None
     __voice = None
     __text = None
+    __textChannels = None
+    __voiceChannels = None
 
 
     #==========================================================
     #=                    Public Functions                    =
     #==========================================================
+
+    def __updateTextChannels(self):
+        text_channel_list = {}
+        for server in self.bot.guilds:
+            for channel in server.channels:
+                if str(channel.type) == 'text':
+                    text_channel_list[channel.name] = channel
+        self.__textChannels = text_channel_list
+
+    def __updateVoiceChannels(self):
+        voice_channel_list = {}
+        for server in self.bot.guilds:
+            for channel in server.channels:
+                if str(channel.type) == 'voice':
+                    voice_channel_list[channel.name] = channel
+        self.__voiceChannels = voice_channel_list
 
     def __init__(self, bot):
         self.bot = bot
@@ -64,36 +82,19 @@ class Event(commands.Cog):
         await ctx.send(embed=mbed)
         return
 
-
-    # @commands.command(name="delete_event")
-    # async def delete_event(self, ctx, channel: TextChannel=None):
-    #     # mbed = discord.Embed(
-    #     #     title = 'Success!',
-    #     #     description = "Channel: {} has been deleted".format(channel),
-    #     # # )
-    #     # await ctx.send(embed=mbed)
-    #     await channel.delete()
-    #     return
-
-    # @commands.command(name="delete_event")
-    # async def delete_event(self, ctx, channel: VoiceChannel=None):
-    #     # mbed = discord.Embed(
-    #     #     title = 'Success!',
-    #     #     description = "Channel: {} has been deleted".format(channel),
-    #     # )
-    #     # await ctx.send(embed=mbed)
-    #     await channel.delete()
-    #     return
-
     @commands.command(name="delete_event")
-    async def delete_event(self, ctx, text_channel: TextChannel=None, voice_channel: VoiceChannel=None):
-        if text_channel:
-            await text_channel.delete()
-        if voice_channel:
-            await voice_channel.delete()
-        return
+    async def delete_event(self, ctx: commands.Context, channel):
+        self.__updateTextChannels()
+        self.__updateVoiceChannels()
+        textChannel = self.__textChannels.get(channel)
+        voiceChannel = self.__voiceChannels.get(channel)
 
+        if textChannel is not None:
+            await textChannel.delete()
+        if voiceChannel is not None:
+            await voiceChannel.delete()
+            
+        return
 
 def setup(bot):
     bot.add_cog(Event(bot))
-

@@ -30,6 +30,7 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(games[randrange(len(games))]),afk=False)
 
 bot.load_extension('cogs.messages')
+bot.load_extension('cogs.event')
 bot.run(os.getenv('DISCORD_TOKEN'))
 
 
