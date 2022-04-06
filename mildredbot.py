@@ -4,6 +4,7 @@
 # ==== Externally Built Main Imports ====
 from cgitb import text
 from datetime import date, datetime
+from random import randrange
 import discord
 import os
 import asyncio
@@ -136,25 +137,47 @@ class Bot():
 #==========================================================
 
 load_dotenv()
-
 bot = Bot()
 botCommands = bot.getCommands()
-botMessageCommands = bot.getMessageCommands()
-botEventCommands = bot.getEventCommands()
 client = bot.getClient()
 
-
-@client.event
+@botCommands.event
 async def on_ready():
-    print(f'{client.user} has connected to Discord!')
-    
+    print(f'{botCommands.user.name} has connected to Discord!')
     bot.init() # Initialize attributes that depend on Discord connection
+    await botCommands.change_presence(activity=discord.Game(games[randrange(len(games))]),afk=False)
+
+botCommands.load_extension('cogs.messages')
+botCommands.load_extension('cogs.eventcommands')
+botCommands.run(os.getenv('DISCORD_TOKEN'))
+
+#==========================================================
+#                       Old Main                          =
+#==========================================================
+# load_dotenv()
+# bot = Bot()
+# botCommands = bot.getCommands()
+# botMessageCommands = bot.getMessageCommands()
+# botEventCommands = bot.getEventCommands()
+# client = bot.getClient()
+
+# @client.event
+# async def on_ready():
+#     print(f'{client.user} has connected to Discord!')
+#     bot.init() # Initialize attributes that depend on Discord connection
+#     await client.change_presence(activity=discord.Game(games[randrange(len(games))]),afk=False)
+
+# @botCommands.command()
+# async def on_ready():
+#     print(f'{botCommands.user} has connected to Discord!')
 
 
-    # update news loop, nothing will run below this loop
-    # while(True):
-    #     bot.updateNewsFeed()
-    #     await asyncio.sleep(60)
+#     # update news loop, nothing will run below this loop
+#     # while(True):
+#     #     bot.updateNewsFeed()
+#     #     await asyncio.sleep(60)
 
-bot.getCommands().load_extension('cogs.messages')
-client.run(os.getenv('DISCORD_TOKEN'))
+# bot.getCommands().load_extension('cogs.messages')
+
+# bot.getCommands().load_extension('cogs.eventcommands')
+# client.run(os.getenv('DISCORD_TOKEN'))
