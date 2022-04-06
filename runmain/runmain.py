@@ -1,34 +1,33 @@
-# # Filename: runmain.py
+# Filename: runmain.py
 
-# # ==== Externally Built Main Imports ====
-# import os
-# import discord
+# ==== Externally Built Main Imports ====
+from distutils.command.clean import clean
+import os
+import discord
 
-# # ==== Externally Built Object Imports ====
-# from discord.ext import commands # For Slash Commands and Other Commands
-# # from discord_slash import SlashCommand, SlashContext # For Slash Commands
-# # from discord_slash.utils.manage_commands import create_choice, create_option # For Slash Commands options
-# from discord import Member
-# from random import randrange
-# from dotenv import load_dotenv
-# load_dotenv()
+# ==== Externally Built Object Imports ====
+import discord
+from discord.ext import commands
+from random import randrange
+from dotenv import load_dotenv
 
-# # ==== Locally Built Object Imports ====
-# from games import games
+# ==== Locally Built Object Imports ====
+from games import games
+from mildredbot import Bot
 
+load_dotenv()
+bot = Bot()
+botCommands = commands.Bot(command_prefix='!')
+botMessageCommands = bot.getMessageCommands()
+botEventCommands = bot.getEventCommands()
+client = bot.getClient()
 
-# # ==== Set Up Discord Bot as Client ====
-# bot = commands.Bot(command_prefix='!', help_command=None) # For possible future command prefix use
-# bot.case_insensitive=True
-# # slash = SlashCommand(bot, sync_commands=True) # Enables slash commands provided bot has permissions
+@botCommands.event
+async def on_ready():
+    print(f'{client.user.name} has connected to Discord!')
+    bot.init() # Initialize attributes that depend on Discord connection
+    await client.change_presence(activity=discord.Game(games[randrange(len(games))]),afk=False)
 
-
-# # ==== Bot Connection On ====
-# @bot.event
-# async def on_ready():
-#     print(f'{bot.user.name} has dropped into your Discord server!')
-#     await bot.change_presence(activity=discord.Game(games[randrange(len(games))]),afk=False)
-
-# bot.load_extension('cogs.messages')
-# bot.load_extension('cogs.event')
-# bot.run(os.getenv('DISCORD_TOKEN'))
+botCommands.load_extension('cogs.messages')
+botCommands.load_extension('cogs.eventcommands')
+botCommands.run(os.getenv('DISCORD_TOKEN'))
