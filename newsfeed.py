@@ -30,7 +30,7 @@ class NewsFeed():
 
     def initSources(self):
         self.__sourcesList = []
-        sourcesDF = pd.read_csv("/home/dru/Desktop/Discord-Bot-Project/sources.csv")
+        sourcesDF = pd.read_csv("sources.csv") # Replace With Path to CSV file
         for index, row in sourcesDF.iterrows():
             csvSource = Source(
                 row["Name"],
