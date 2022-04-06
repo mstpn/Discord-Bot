@@ -22,7 +22,7 @@ class Messages(commands.Cog):
 # ------------------------------------------------------------
     @commands.Cog.listener()
     async def on_ready(self):
-        print("Events Command Bot is Online")
+        print("Messages Command Bot is Online")
 
     # ------------------------------------
     # ---- Message Command Handler(s) ----
