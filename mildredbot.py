@@ -38,16 +38,16 @@ class Bot():
     __textChannels = {}
     __newsChannel = None
 
-    #for testing
-    __testChannel = None
+
+    __commandsListener = None
 
     #==========================================================
     #                     Public Functions                    =
     #==========================================================
 
     def __init__(self):
-        self.__botClient = discord.Client(status=discord.Status.online)
         self.__botCommands = commands.Bot(command_prefix='!')
+        self.__botClient = self.__botCommands
         self.__botCommands.case_insensitive=True
         self.__chatMessageCommands = Messages(self.__botCommands)
         self.__botEventCommands = EventCommands(self.__botCommands)
@@ -56,6 +56,7 @@ class Bot():
     def init(self):
         self.__updateTextChannels()
         self.__newsChannel = self.__textChannels.get('newsfeed')
+        self.updateNewsFeed()
 # ------------------------------------------------------------
     def updateNewsFeed(self):
         stories = self.__newsFeed.postNews()
@@ -111,25 +112,13 @@ class Bot():
         for server in client.guilds:
             for channel in server.channels:
                 if str(channel.type) == 'text':
-                    # text_channel_list[channel.name] = channel.id
                     text_channel_list[channel.name] = channel
         self.__textChannels = text_channel_list
 # ------------------------------------------------------------
 
-    #DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE
-    #DELETE               TESTING Functions                  DELETE
-    #DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE
-
-    def getTestChannel(self):
-        return self.__testChannel
-# ------------------------------------------------------------
 #==============================================================================
 #=                                 End Class Bot()                            =
 #==============================================================================
-
-
-
-
 
 
 #==========================================================
@@ -139,45 +128,18 @@ class Bot():
 load_dotenv()
 bot = Bot()
 botCommands = bot.getCommands()
-client = bot.getClient()
 
 @botCommands.event
 async def on_ready():
-    print(f'{botCommands.user.name} has connected to Discord!')
-    bot.init() # Initialize attributes that depend on Discord connection
+    print(f'{botCommands.user.name} commands has connected to Discord!')
+    bot.init()
     await botCommands.change_presence(activity=discord.Game(games[randrange(len(games))]),afk=False)
+
+    while(True):
+        bot.updateNewsFeed()
+        print("\nfeed updated\n")
+        await asyncio.sleep(60) #this prevents blocking
 
 botCommands.load_extension('cogs.messages')
 botCommands.load_extension('cogs.eventcommands')
 botCommands.run(os.getenv('DISCORD_TOKEN'))
-
-#==========================================================
-#                       Old Main                          =
-#==========================================================
-# load_dotenv()
-# bot = Bot()
-# botCommands = bot.getCommands()
-# botMessageCommands = bot.getMessageCommands()
-# botEventCommands = bot.getEventCommands()
-# client = bot.getClient()
-
-# @client.event
-# async def on_ready():
-#     print(f'{client.user} has connected to Discord!')
-#     bot.init() # Initialize attributes that depend on Discord connection
-#     await client.change_presence(activity=discord.Game(games[randrange(len(games))]),afk=False)
-
-# @botCommands.command()
-# async def on_ready():
-#     print(f'{botCommands.user} has connected to Discord!')
-
-
-#     # update news loop, nothing will run below this loop
-#     # while(True):
-#     #     bot.updateNewsFeed()
-#     #     await asyncio.sleep(60)
-
-# bot.getCommands().load_extension('cogs.messages')
-
-# bot.getCommands().load_extension('cogs.eventcommands')
-# client.run(os.getenv('DISCORD_TOKEN'))

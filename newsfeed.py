@@ -41,25 +41,8 @@ class NewsFeed():
 
     # Updates the source list 
     def updateSources(self):
-        # self.__sourcesList = []
-        # sourcesDF = pd.read_csv('sources.csv')
-        # for index, row in sourcesDF.iterrows():
-        #     csvSource = Source(
-        #         row["Name"],
-        #         row["Type"],
-        #         row["URL"]
-        #     )
-        #     self.__sourcesList.append(csvSource)
-        
-        # date = []
         for source in self.__sourcesList:
-            # date.append(source.updateStories())
             source.updateStories()
-
-            # testing
-            # source.printStories()
-
-        # self.__lastUpdated = max(date)
 
     # Returns an array of strings that the bot can iterate through to post
     def postNews(self):
@@ -75,12 +58,3 @@ class NewsFeed():
         if len(date) != 0:
             self.__lastUpdated = max(date)
         return stories
-                
-
-        
-        
-
-
-""" --------------------LOCAL TESTING------------------------- """
-
-feed = NewsFeed()

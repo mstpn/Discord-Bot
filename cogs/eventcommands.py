@@ -51,7 +51,7 @@ class EventCommands(commands.Cog):
         self.__voiceChannels = voice_channel_list
 # ------------------------------------------------------------
     @commands.command(name="event_voice")
-    async def event_voice(self, ctx: commands.Context, channelName))
+    async def event_voice(self, ctx: commands.Context, channelName):
         # self.__updateVoiceChannels()
         guild = ctx.guild()
         mbed:discord.Embed = discord.Embed(
@@ -81,8 +81,16 @@ class EventCommands(commands.Cog):
 
         if textChannel is not None:
             await textChannel.delete()
+            mbed:discord.Embed = discord.Embed(
+            title = 'Success!',
+            description = "{} text channel has been successfully deleted.".format(channel)
+        )
         if voiceChannel is not None:
             await voiceChannel.delete()
+            mbed:discord.Embed = discord.Embed(
+            title = 'Success!',
+            description = "{} voice channel has been successfully deleted.".format(channel)
+        )
 # ------------------------------------------------------------
 
 def setup(bot):
