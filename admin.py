@@ -5,9 +5,9 @@
 #=              Class Admin              =
 #=========================================
 
-from serveruser import ServerUser
+from user import User
 
-class Admin(ServerUser):
+class Admin(User):
     
     #==========================================================
     #=                    Public Functions                    =
@@ -15,12 +15,13 @@ class Admin(ServerUser):
 
     def __init__(self) -> None:
         super().__init__()
-
+# ------------------------------------------------------------
     def deleteAllEvents():
         pass
-
+# ------------------------------------------------------------
     def deleteAllEvents(object):
         pass
-    
+# ------------------------------------------------------------  
     def deleteEvent(object):
         pass
+# ------------------------------------------------------------

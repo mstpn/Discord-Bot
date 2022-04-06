@@ -4,8 +4,8 @@
 # List of Games the Bot Plays on it's Status Profile
 # This was for testing purposes
 games = [
-    "Sea of Thieves",
     "Carl on Duty: Mall Cops",
+    "Sea of Thieves",
     "Battlefield 1942",
     "Undertale",
     "Fallout 76",

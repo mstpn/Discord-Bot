@@ -14,7 +14,8 @@ from discord.ext import commands
 # ==== Locally Built Object Imports ====
 from games import games
 from cogs.messages import Messages
-from newfeed import NewsFeed
+from cogs.eventcommands import EventCommands
+from newsfeed import NewsFeed
 
 #========================================
 #                Bot Class              =
@@ -26,7 +27,10 @@ class Bot():
     #===================================================
     #                     Variables                    =
     #===================================================
+
     __botClient = None
+    __botCommands = None
+    __botEvents = None
     __userList = None
     __eventList = None
     __newsFeed = None
@@ -36,39 +40,49 @@ class Bot():
     #for testing
     __testChannel = None
 
-
     #==========================================================
     #                     Public Functions                    =
     #==========================================================
 
     def __init__(self):
         self.__botClient = discord.Client(status=discord.Status.online)
-        # __chatMessage = Messages()
+        self.__botCommands = commands.Bot(command_prefix='!')
+        self.__botCommands.case_insensitive=True
+        self.__chatMessageCommands = Messages(self.__botCommands)
+        self.__botEventCommands = EventCommands(self.__botCommands)
         self.__newsFeed = NewsFeed()
-
+# ------------------------------------------------------------
     def init(self):
         self.__updateTextChannels()
         self.__newsChannel = self.__textChannels.get('newsfeed')
-
-
+# ------------------------------------------------------------
     def updateNewsFeed(self):
         stories = self.__newsFeed.postNews()
         for story in stories:
             # print(story) #console print
             self.sendMsg(self.__newsChannel, story)
-
+# ------------------------------------------------------------
     def parseCommand(self, command):
         pass
-
+# ------------------------------------------------------------
     def createUsername(self, object):
         pass
-
+# ------------------------------------------------------------
     def displayCommands(self):
         pass
-
+# ------------------------------------------------------------
     def getClient(self):
         return self.__botClient
-
+# ------------------------------------------------------------
+    def getCommands(self):
+        return self.__botCommands
+# ------------------------------------------------------------
+    def getMessageCommands(self):
+        return self.__chatMessageCommands
+# ------------------------------------------------------------
+    def getEventCommands(self):
+        return self.__botEventCommands
+# ------------------------------------------------------------
     def sendMsg(self, channel, msg):
         client = self.__botClient
         try:
@@ -79,15 +93,15 @@ class Bot():
             return False
         else:
             return True
-
+# ------------------------------------------------------------
     def getTextChannels(self):
         return self.__textChannels
-
+# ------------------------------------------------------------
     def getNewsChannel(self):
         return self.__newsChannel
-
+# ------------------------------------------------------------
     #==========================================================
-    #                     Private Functions                    =
+    #                     Private Functions                   =
     #==========================================================
 
     def __updateTextChannels(self):
@@ -99,7 +113,7 @@ class Bot():
                     # text_channel_list[channel.name] = channel.id
                     text_channel_list[channel.name] = channel
         self.__textChannels = text_channel_list
-
+# ------------------------------------------------------------
 
     #DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE
     #DELETE               TESTING Functions                  DELETE
@@ -107,18 +121,28 @@ class Bot():
 
     def getTestChannel(self):
         return self.__testChannel
+# ------------------------------------------------------------
+#==============================================================================
+#=                                 End Class Bot()                            =
+#==============================================================================
 
-#================================= End Class Bot() ============================
+
+
+
 
 
 #==========================================================
-#                    Main                                 =
+#                           Main                          =
 #==========================================================
 
 load_dotenv()
 
 bot = Bot()
+botCommands = bot.getCommands()
+botMessageCommands = bot.getMessageCommands()
+botEventCommands = bot.getEventCommands()
 client = bot.getClient()
+
 
 @client.event
 async def on_ready():
@@ -126,10 +150,11 @@ async def on_ready():
     
     bot.init() # Initialize attributes that depend on Discord connection
 
+
     # update news loop, nothing will run below this loop
-    while(True):
-        bot.updateNewsFeed()
-        await asyncio.sleep(60)
+    # while(True):
+    #     bot.updateNewsFeed()
+    #     await asyncio.sleep(60)
 
-
+bot.getCommands().load_extension('cogs.messages')
 client.run(os.getenv('DISCORD_TOKEN'))

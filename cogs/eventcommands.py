@@ -1,17 +1,15 @@
 # Filename: event.py
-# import into another file by using "from event import Event"
+# import into another file by using "from cogs.eventcommands import EventCommands"
 
-#=========================================
-#=              Event Class              =
-#=========================================
 import discord
-import asyncio
-
-
 from discord.ext import commands
 from discord import TextChannel, VoiceChannel
 
-class Event(commands.Cog):
+#===================================================
+#=              Events Commands Class              =
+#===================================================
+
+class EventCommands(commands.Cog):
 
     #===================================================
     #=                    Variables                    =
@@ -25,11 +23,21 @@ class Event(commands.Cog):
     __textChannels = None
     __voiceChannels = None
 
-
     #==========================================================
     #=                    Public Functions                    =
     #==========================================================
 
+    def __init__(self, bot):
+        self.bot = bot
+# ------------------------------------------------------------
+    def createVoiceChannel(self, __startTime, __duration):
+        __startTime = __startTime
+        __duration = __duration
+# ------------------------------------------------------------
+    def createTextChannel(self, __startTime, __duration):
+        __startTime = __startTime
+        __duration = __duration
+# ------------------------------------------------------------
     def __updateTextChannels(self):
         text_channel_list = {}
         for server in self.bot.guilds:
@@ -37,7 +45,7 @@ class Event(commands.Cog):
                 if str(channel.type) == 'text':
                     text_channel_list[channel.name] = channel
         self.__textChannels = text_channel_list
-
+# ------------------------------------------------------------
     def __updateVoiceChannels(self):
         voice_channel_list = {}
         for server in self.bot.guilds:
@@ -45,18 +53,7 @@ class Event(commands.Cog):
                 if str(channel.type) == 'voice':
                     voice_channel_list[channel.name] = channel
         self.__voiceChannels = voice_channel_list
-
-    def __init__(self, bot):
-        self.bot = bot
-
-    def createVoiceChannel(self, __startTime, __duration):
-        __startTime = __startTime
-        __duration = __duration
-
-    def createTextChannel(self, __startTime, __duration):
-        __startTime = __startTime
-        __duration = __duration
-
+# ------------------------------------------------------------
     @commands.command(name="event_voice")
     async def event_voice(self, ctx: commands.Context, channelName: str):
         guild = ctx.guild
@@ -67,9 +64,7 @@ class Event(commands.Cog):
         )
         await guild.create_voice_channel(name='{}'.format(channelName))
         await ctx.send(embed=mbed)
-        return
-
-
+# ------------------------------------------------------------
     @commands.command(name="event_text")
     async def event_text(self, ctx: commands.Context, channelName: str):
         guild = ctx.guild
@@ -80,8 +75,7 @@ class Event(commands.Cog):
         )
         await guild.create_text_channel(name='{}'.format(channelName))
         await ctx.send(embed=mbed)
-        return
-
+# ------------------------------------------------------------
     @commands.command(name="delete_event")
     async def delete_event(self, ctx: commands.Context, channel):
         self.__updateTextChannels()
@@ -93,8 +87,7 @@ class Event(commands.Cog):
             await textChannel.delete()
         if voiceChannel is not None:
             await voiceChannel.delete()
-            
-        return
+# ------------------------------------------------------------
 
 def setup(bot):
-    bot.add_cog(Event(bot))
+    bot.add_cog(EventCommands(bot))
