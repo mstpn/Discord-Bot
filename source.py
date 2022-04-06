@@ -35,7 +35,6 @@ class Source():
         self.__sourceName = name
         self.__sourceType = type
         self.__sourceURL = url
-        self.updateStories()
 
     """ 
     Generates a list of stories from the source
@@ -63,6 +62,9 @@ class Source():
                         break
         if len(self.__storyList) != 0:    
             self.__lastUpdated = parse(self.__storyList[0].getDate())
+        
+        return self.__lastUpdated
+            # self.__lastUpdated = parse(str(datetime.now()))
 
     def getStoryList(self):
         return self.__storyList

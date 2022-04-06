@@ -3,8 +3,10 @@
 
 # ==== Externally Built Main Imports ====
 from cgitb import text
+from datetime import date, datetime
 import discord
 import os
+import asyncio
 
 from dotenv import load_dotenv
 from discord.ext import commands
@@ -48,16 +50,12 @@ class Bot():
         self.__updateTextChannels()
         self.__newsChannel = self.__textChannels.get('newsfeed')
 
-        #for testing
-        self.__testChannel = self.__textChannels.get('testing')
 
     def updateNewsFeed(self):
         stories = self.__newsFeed.postNews()
         for story in stories:
-            # print(story)
-            # await bot.getNewsChannel().send(story)
-            client.loop.create_task(bot.getNewsChannel().send(story))
-
+            # print(story) #console print
+            self.sendMsg(self.__newsChannel, story)
 
     def parseCommand(self, command):
         pass
@@ -80,7 +78,6 @@ class Bot():
             print("write error")
             return False
         else:
-            print("message sent")
             return True
 
     def getTextChannels(self):
@@ -120,17 +117,6 @@ class Bot():
 
 load_dotenv()
 
-# client = commands.Bot(command_prefix='!', help_command=None) 
-# client.case_insensitive=True
-
-# @client.event
-# async def on_ready():
-#     print(f'{client.user.name} has dropped into your Discord server!')
-#     await client.change_presence(activity=discord.Game(games[randrange(len(games))]),afk=False)
-
-# client.load_extension('cogs.messages')
-# client.run(os.getenv('DISCORD_TOKEN'))
-
 bot = Bot()
 client = bot.getClient()
 
@@ -140,9 +126,10 @@ async def on_ready():
     
     bot.init() # Initialize attributes that depend on Discord connection
 
-    bot.updateNewsFeed()
-    # msg = "test message from mildredbot.py"
-    # await bot.getTestChannel().send(msg)
-    # bot.sendMsg(bot.getTestChannel(),msg)
+    # update news loop, nothing will run below this loop
+    while(True):
+        bot.updateNewsFeed()
+        await asyncio.sleep(60)
+
 
 client.run(os.getenv('DISCORD_TOKEN'))

@@ -4,6 +4,7 @@
 from datetime import datetime
 import pandas as pd
 from source import Source
+from dateutil.parser import *
 
 #=============================================
 #=              News Feed Class              =
@@ -25,11 +26,9 @@ class NewsFeed():
 
     # Constructor
     def __init__(self):
-        self.updateSources()
+        self.initSources()
 
-
-    # Updates the source list 
-    def updateSources(self):
+    def initSources(self):
         self.__sourcesList = []
         sourcesDF = pd.read_csv('sources.csv')
         for index, row in sourcesDF.iterrows():
@@ -38,24 +37,43 @@ class NewsFeed():
                 row["Type"],
                 row["URL"]
             )
-            self.__sourcesList.append(csvSource)
+            self.__sourcesList.append(csvSource)  
+
+    # Updates the source list 
+    def updateSources(self):
+        # self.__sourcesList = []
+        # sourcesDF = pd.read_csv('sources.csv')
+        # for index, row in sourcesDF.iterrows():
+        #     csvSource = Source(
+        #         row["Name"],
+        #         row["Type"],
+        #         row["URL"]
+        #     )
+        #     self.__sourcesList.append(csvSource)
         
+        # date = []
         for source in self.__sourcesList:
+            # date.append(source.updateStories())
             source.updateStories()
 
             # testing
             # source.printStories()
 
-        self.__lastUpdated = datetime.now()     
+        # self.__lastUpdated = max(date)
 
     # Returns an array of strings that the bot can iterate through to post
     def postNews(self):
         self.updateSources()
         stories = []
+        date = []
         for source in self.__sourcesList:
             for story in source.getStoryList():
-                storyString = '\n'.join(story.getAll())
-                stories.append(storyString)
+                if self.__lastUpdated == None or parse(story.getDate()) > self.__lastUpdated:
+                    storyString = '\n'.join(story.getAll())
+                    stories.append(storyString)
+                    date.append(parse(story.getDate()))
+        if len(date) != 0:
+            self.__lastUpdated = max(date)
         return stories
                 
 
