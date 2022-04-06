@@ -51,9 +51,9 @@ class EventCommands(commands.Cog):
         self.__voiceChannels = voice_channel_list
 # ------------------------------------------------------------
     @commands.command(name="event_voice")
-    async def event_voice(self, ctx: commands.Context, channelName:str):
+    async def event_voice(self, ctx: commands.Context, channelName))
+        # self.__updateVoiceChannels()
         guild = ctx.guild()
-
         mbed:discord.Embed = discord.Embed(
             title = 'Success!',
             description = "{} voice channel has been successfully created.".format(channelName)
@@ -62,9 +62,9 @@ class EventCommands(commands.Cog):
         await ctx.send(embed=mbed)
 # ------------------------------------------------------------
     @commands.command(name="event_text")
-    async def event_text(self, ctx: commands.Context, channelName:str):
+    async def event_text(self, ctx: commands.Context, channelName):
+        # self.__updateTextChannels()
         guild = ctx.guild
-
         mbed:discord.Embed = discord.Embed(
             title = 'Success!',
             description = "{} text channel has been successfully created.".format(channelName)
