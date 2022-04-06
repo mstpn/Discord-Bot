@@ -19,11 +19,14 @@ class Messages(commands.Cog):
     def __init__(self, bot:commands.Bot):
         self.bot = bot
         return
+# ------------------------------------------------------------
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print("Events Command Bot is Online")
 
     # ------------------------------------
     # ---- Message Command Handler(s) ----
     # ------------------------------------
-
     @commands.command(name="nickname")
     async def nickname(self, ctx: commands.Context, member, nick):
         await ctx.send(f"Nickname Command: ctx = {ctx}, member = {member}, nick = {nick} '")

@@ -30,13 +30,9 @@ class EventCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 # ------------------------------------------------------------
-    def createVoiceChannel(self, __startTime, __duration):
-        __startTime = __startTime
-        __duration = __duration
-# ------------------------------------------------------------
-    def createTextChannel(self, __startTime, __duration):
-        __startTime = __startTime
-        __duration = __duration
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print("Events Command Bot is Online")
 # ------------------------------------------------------------
     def __updateTextChannels(self):
         text_channel_list = {}
@@ -55,8 +51,8 @@ class EventCommands(commands.Cog):
         self.__voiceChannels = voice_channel_list
 # ------------------------------------------------------------
     @commands.command(name="event_voice")
-    async def event_voice(self, ctx: commands.Context, channelName: str):
-        guild = ctx.guild
+    async def event_voice(self, ctx: commands.Context, channelName:str):
+        guild = ctx.guild()
 
         mbed:discord.Embed = discord.Embed(
             title = 'Success!',
@@ -66,7 +62,7 @@ class EventCommands(commands.Cog):
         await ctx.send(embed=mbed)
 # ------------------------------------------------------------
     @commands.command(name="event_text")
-    async def event_text(self, ctx: commands.Context, channelName: str):
+    async def event_text(self, ctx: commands.Context, channelName:str):
         guild = ctx.guild
 
         mbed:discord.Embed = discord.Embed(
