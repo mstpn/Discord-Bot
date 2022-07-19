@@ -22,6 +22,8 @@ The "None type / strip" error is a result of not having the .env file in your bu
 
 Clone the repository to a local directory (or server if hosting).  
 
+Ensure the dependencies above are installed.  
+
 Fololow the guide at https://www.writebots.com/discord-bot-token/ to create a discord bot token and add your bot to your server.  
 
 Start the bot by executing 
